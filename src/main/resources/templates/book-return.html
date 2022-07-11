@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div class="success-alert" th:if="${success}">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <span  th:text="${success}"></span>
+    </div>
+    <div class="fail-alert" th:if="${failure}">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <span  th:text="${failure}"></span>
+    </div>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <span th:text="${user!= null} ? ${user.firstName}"></span>
+</head>
+<body>
+<style>
+    .success-alert {
+        padding: 20px;
+        background-color: green;
+        color: white;
+    }
+
+    .fail-alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #111;
+    }
+
+    .active {
+        background-color: #04AA6D;
+    }
+
+
+</style>
+<div>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/books">Books</a></li>
+        <li th:if="${userId != null}"><a href="/returnBook">Return Book</a></li>
+
+        <li th:if="${userId != null}" style="float:right"><a href="/logout">Logout</a></li>
+        <li style="float:right"><a href="#" th:text="${fullName}"></a></li>
+    </ul>
+</div>
+<span style="font-size: large; font-family: sans-serif;" th:text="${message}" th:if="${message}"></span>
+
+<table th:if="${not #lists.isEmpty(books)}">
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+
+    </style>
+    <thead style="background-color: cadetblue;">
+    <tr>
+        <th>Name</th>
+        <th>Author Name</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.name}"></td>
+        <td th:text="${book.authorName}"></td>
+        <td>
+            <form method="POST" th:action="@{/returnCheckOutBooks/{id}(id=${book.id})}">
+                <input id="userId" name="userId" th:value="${userId}" type="hidden"/>
+                <button class="link-button" name="submit" type="submit" value="value">Return</button>
+            </form>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

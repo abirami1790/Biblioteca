@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Biblioteca </title>
+</head>
+<body>
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #111;
+    }
+
+    .active {
+        background-color: #04AA6D;
+    }
+</style>
+
+<div>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="/books">Books</a></li>
+        <li th:if="${userId != null}"><a href="/returnBook">Return Book</a></li>
+
+        <li th:if="${userId != null}" style="float:right"><a href="/logout">Logout</a></li>
+        <li style="float:right"><a href="#" th:text="${email}"></a></li>
+    </ul>
+    <h2 style="font-style: italic; font-family: ui-monospace;">Welcome to Biblioteca. Your one-stop-shop for great book
+        titles in Bangalore!</h2>
+</div>
+</body>
+</html>
+
